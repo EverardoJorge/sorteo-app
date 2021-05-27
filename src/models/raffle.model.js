@@ -12,11 +12,15 @@ const RaffleSchema = new Schema({
         type: Number,
         required: [true, 'the total tickets is required']
     },
-    sold_tickets: [{
-        type: Number
-    }],
+    price_by_ticket: {
+        type: Number,
+        required: [true, 'the price by ticket is required']
+    },
+    sold_tickets: {
+        type: String
+    },
     reward: {
-        type: String,
+        type: String
     },
     date: {
         type: String
