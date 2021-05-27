@@ -1,0 +1,178 @@
+@import 'variables';
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+body {
+    scroll-behavior: smooth;
+    font-size: 1.6rem;
+    background-color: black;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+/* Definición de fuentes
+   ========================================================================== */
+
+   a,
+   h2,
+   body {
+       font-family: @fuente-principal;
+   }
+
+   p {
+       font-family: @fuente-secundaria;
+   }
+
+    /* Ajustes Generales
+   ========================================================================== */
+   
+    h2 {      
+        margin: 0;       
+        color: @white;
+        font-size: 4.5rem;
+        line-height: 1.1;      
+        text-transform: uppercase;
+    }   
+
+    p {
+        color: @white;
+        line-height: 1.3;
+    }
+
+    h2,
+    p {
+        text-align: center;
+    }
+
+   a {
+        color: @white;
+        padding: 0 1.5rem;
+        text-decoration: none;
+        display: inline-block;
+        text-transform: uppercase;    
+    }      
+    
+    source,
+    img {
+        max-width: 100%;
+    }
+
+    picture {
+        display: block;
+        margin: 0 auto;
+    }
+
+    section {
+        padding: 12rem 0;
+    }
+
+/* Layout
+   ========================================================================== */
+
+ .contain {
+    max-width: 1150px;
+    margin: 0 auto;
+    //padding: 2.5rem;
+}
+
+.banner-box {
+    width: 50%;
+    min-height: 38rem;
+    padding: 5rem 0;
+}
+
+.flex {
+    display: flex;
+
+    &.full {
+        justify-content: space-between;
+    }
+
+    &.between {
+        justify-content: space-around;
+    }
+
+    &.right {
+        justify-content: flex-end;
+    }
+
+    &.left {
+        justify-content: flex-start;
+    }
+}
+
+.grid {
+    display: grid;
+
+    &.column2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &.column3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+/* Generales
+   ========================================================================== */
+
+.title {
+    font-family: @fuente-principal;
+}
+
+.block {
+    display: block;
+}
+
+.center {
+    text-align: center;
+}
+
+.middle {
+    margin: 0 auto;
+}
+
+.btn {
+    color: @white;
+    
+    text-transform: uppercase;
+    display: inline-block;
+
+    &.sorteo {
+        margin-top: 4rem;
+        font-size: 4rem;
+        padding: 4.5rem 6.5rem;
+        background: url('../img/boton-sorteo.webp') no-repeat center center;
+        background-size: cover;
+    }
+
+    &.whats {       
+        margin: 1.5rem 0;
+        font-size: 3rem;  
+        padding: 1.2rem 7rem;
+        border-radius: 1rem;
+        background-color: @green;
+        font-family: @fuente-secundaria;
+
+        .flex {
+            align-items: center;
+        }
+
+        picture {
+            margin-right: 1rem;
+            display: inline-block;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+}
+
+@import 'base-responsive';

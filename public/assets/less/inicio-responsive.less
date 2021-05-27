@@ -1,0 +1,330 @@
+@media (min-width: 1863px) {
+
+/* Imágenes webp
+   ========================================================================== */
+    .webp {
+
+        #fondo-seccion1 {
+            height: 160rem;
+            background-position: bottom center;
+        }       
+
+        #footer {
+            height: 98rem;          
+            background-position: center 91%;
+        }
+      
+    }
+
+    .no-webp {
+
+        #fondo-seccion1 {
+            height: 160rem;
+            background-position: bottom center;
+        }      
+
+        #footer {
+            height: 98rem;          
+            background-position: center 91%;
+        }
+    }
+
+/* Clases
+   ========================================================================== */
+
+   #footer {
+
+    .flex.full {       
+        justify-content: space-around;      
+     }
+
+     .down {
+         a, p {
+             font-size: 2.8rem;
+         }
+     }
+   }
+}
+
+@media (max-width: 1024px) {
+    #menu nav a {
+        font-size: 1.4rem;
+    }
+
+}
+
+@media (max-width: 900px) {
+    /* Imágenes webp
+   ========================================================================== */
+   .webp {
+
+        #fondo-seccion1 {
+            background: url('../img/resp-seccion1.webp') no-repeat center bottom;
+            background-size: cover;
+        }       
+    
+    }
+
+    .no-webp {
+
+        #fondo-seccion1 {
+            background: url('../img/resp-seccion1.jpg') no-repeat center bottom;
+            background-size: cover;
+        }      
+    }
+
+      /* Fondos
+   ========================================================================== */
+   #fondo-seccion1 {
+        height: 142rem;      
+    }
+
+    #fondo-seccion2 {
+        #face-left,
+        #face-right {
+            display: none;
+        }
+    }
+
+     /* Inicio
+   ========================================================================== */
+   #menu {
+
+    position: relative;
+
+        .img {
+            margin: 0 auto;
+        }
+
+        .hamburguesa {
+            position: fixed;
+            width: 75%;            
+            top: 6rem;
+            left: 5rem;
+            z-index: 30;
+        }  
+
+        #icono-menu {         
+            display: inline-block;
+        } 
+
+        #navegacion {
+            top: 0;
+            width: 0%;            
+            overflow: hidden;
+            position: absolute;            
+            background-color: @white;
+            transition: width .5s ease 0s;
+        }
+
+        #navegacion:target {
+            width: 100%;           
+        }      
+
+        #cancelar {
+            display: block;
+        }
+
+        nav a{        
+            color: @red;
+            display: block;
+            font-size: 2rem;
+            padding: 2rem 1rem;
+            border-bottom: .5rem solid @red;
+        }
+
+        nav a::before{
+            content: '';
+        }
+
+        nav a:last-of-type{
+            color: @white;
+            background-color: @red;
+            border-bottom: none;
+        }
+
+   } 
+
+   #slide {
+        .banner-box {
+            padding-right: 0;
+        }
+
+        picture.flex{
+            display: block;
+            margin: 0 auto;
+        }
+
+        .big {
+            margin-top: 0;
+        }
+   }
+
+   #busca-numero {
+       max-width: 75%;
+
+       .big {
+           font-size: 3rem;
+       }
+
+       .small,
+       .small a {
+           font-size: 2.2rem;
+       }
+
+       input[type="submit"] {       
+            font-size: 2.4rem;
+        }
+   }
+
+   #paga-boleto {
+
+       .grid {
+           padding: 0;
+       }
+   }
+}
+
+@media (max-width: 768px) {
+
+    #busca-numero {     
+ 
+        .big {
+            font-size: 2.5rem;
+        }
+ 
+        .small,
+        .small a {
+            font-size: 1.8rem;
+        } 
+      
+    }
+
+    #footer .contain {
+        padding: 2rem 3rem;
+    }
+
+    /* MODAL BOX
+   ========================================================================== */
+   #bases-sorteo {
+
+      .cancel {
+          display: block;
+          position: static;
+          margin: 3rem auto;
+      }
+    }
+}
+
+@media (max-width: 480px) {
+  /* Imágenes webp
+   ========================================================================== */
+   .webp {
+
+        #fondo-seccion1 {            
+            background-size: contain;
+            background-position: center center;
+        }          
+
+    }
+
+    .no-webp {
+
+        #fondo-seccion1 {           
+            background-size: contain;
+            background-position: center center;
+        }      
+    }
+
+/* Fondos
+   ========================================================================== */
+   #fondo-seccion1 {
+        height: 97rem;      
+    }
+
+/* Inicio
+   ========================================================================== */
+   #menu {
+
+        img,
+        source{
+            width: 65%;
+            height: auto;
+            margin: 0 auto;        
+            display: block;    
+        }
+
+        .hamburguesa {     
+            top: .8rem;  
+            left: .5rem;   
+            width: 95%;            
+          
+        }  
+
+    }
+    
+    #slide {
+
+        p{
+            font-size: 2em;
+        }
+    }
+
+    #busca-numero {
+        max-width: 100%;
+        margin-top: 7rem;
+
+        .big {
+            font-size: 2rem;
+        }
+
+        
+        .small,
+        .small a {
+            font-size: 1em;
+        } 
+    }
+
+    #lista-numeros {
+        .flex.between {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    #paga-boleto {
+        margin-top: 5rem;
+    }
+
+    #comprobante {
+        .middle {
+            font-size: 1em;
+        }
+    }  
+
+    #footer {
+        height: 55rem;
+
+        .up p {
+            font-size: 2rem;
+        }
+
+        .down .center a {
+            margin-top: 1.5rem;
+        }
+    } 
+
+        
+/* MODAL BOX
+   ========================================================================== */
+   #bases-sorteo {
+
+        p {
+            text-align: left;
+        }
+
+        li {
+            margin-bottom: 3rem;
+        }
+    }
+} 
