@@ -19,7 +19,8 @@ const addRaffle = async(req, res) => {
             res.redirect('/sorteos');
         })
         .catch((e) => {
-            console.log(e)
+            console.log(e);
+            res.redirect('/sorteos')
         })
 
 }
@@ -70,6 +71,7 @@ const getAllRaffle = async(req, res) => {
         res.render('raffle', { raffles });
     }).catch((e) => {
         console.log(e);
+        res.redirect('/sorteos')
     })
 }
 
@@ -78,7 +80,7 @@ const updateRaffle = async(req, res) => {
 
     Raffle.findById(idRaffle).exec()
         .then((raffle) => {
-            if (nticket <= raffle.total_tickets) {
+            if (nticket <= raffle.total_tickets && nticket > 0 && typeof nticket != 'number') {
                 const jsonSt = JSON.parse(raffle.sold_tickets)
                 const foudTicket = jsonSt.find(ticket => ticket == nticket)
                 let porcent = jsonSt.length * 100 / raffle.total_tickets;
@@ -116,7 +118,8 @@ const updateRaffle = async(req, res) => {
             }
         })
         .catch((e) => {
-
+            console.log(e);
+            res.redirect('/sorteos')
         })
 
 }
