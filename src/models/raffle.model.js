@@ -24,6 +24,9 @@ const RaffleSchema = new Schema({
     },
     date: {
         type: String
+    },
+    users: {
+        type: String
     }
 })
 

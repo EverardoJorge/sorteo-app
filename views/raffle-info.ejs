@@ -149,7 +149,6 @@
                                 </div>
                             </div>
                             <div class="row">
-
                                 <div class="col-xl-8 col-lg-7">
                                     <div class="card shadow mb-4">
                                         <div class="card-header py-3 ">
@@ -163,9 +162,9 @@
                                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                     <thead>
                                                         <tr>
+                                                            <th>ID</th>
                                                             <th>Descripción</th>
                                                             <th>Total de boletos</th>
-                                                            <th>Boletos vendidos</th>
                                                             <th>Premio</th>
 
                                                         </tr>
@@ -173,13 +172,13 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>
+                                                                <%- raffle._id -%>
+                                                            </td>
+                                                            <td>
                                                                 <%- raffle.desc -%>
                                                             </td>
                                                             <td>
                                                                 <%- raffle.total_tickets -%>
-                                                            </td>
-                                                            <td>
-
                                                             </td>
                                                             <td>
                                                                 <%- raffle.reward -%>
@@ -192,7 +191,62 @@
                                     </div>
                                 </div>
 
-                                <!-- Pie Chart -->
+                                <!---->
+                                <div class="col-xl-8 col-lg-7">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3 ">
+                                            <h6 class="m-0 font-weight-bold text-primary">
+                                                Usuarios que han comprado boletos
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Nombre</th>
+                                                            <th>Estado</th>
+                                                            <th>Correo</th>
+                                                            <th>Teléfono</th>
+                                                            <th>Boletos</th>
+                                                            <th>Nuevo boleto</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% JSON.parse(raffle.users).forEach((user) => { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= user.id %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= user.username %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= user.state %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= user.email %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= user.phone %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= user.tickets %>
+                                                                </td>
+                                                                <td>
+                                                                    acciones
+                                                                </td>
+                                                            </tr>
+                                                            <% }) %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
                                 <div class="col-xl-4 col-lg-5">
                                     <div class="card shadow mb-4">
                                         <!-- Card Header - Dropdown -->
@@ -242,10 +296,31 @@
                                                         </div>
                                                         <% }  %>
                                                             <form class="user" action="/actualizar-rifa" method="post">
-                                                                <input type="hidden" name="idRaffle" value="<%-raffle._id-%>">
                                                                 <div class="form-group">
-                                                                    <input id="nticket" type="number" name="nticket" class="form-control form-control-user" placeholder="Número de boleto">
+                                                                    <input required type="number" name="nticket" class="form-control form-control-user" placeholder="Número de boleto">
                                                                 </div>
+
+                                                                <div class="form-group">
+                                                                    <input required type="text" name="username" class="form-control form-control-user" placeholder="Nombre">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <input required type="text" name="lastname" class="form-control form-control-user" placeholder="Apellidos">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <input required type="email" name="email" class="form-control form-control-user" placeholder="Correo">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <input required type="text" name="phone" class="form-control form-control-user" placeholder="Teléfono">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <input required type="text" name="state" class="form-control form-control-user" placeholder="Estado de la republica">
+                                                                </div>
+
+                                                                <input type="hidden" name="idRaffle" value="<%-raffle._id-%>">
 
                                                                 <div class="form-group">
                                                                     <input type="submit" value="Comprar" class="btn btn-success btn-user btn-block">
@@ -255,6 +330,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+
                             </div>
 
                         </div>

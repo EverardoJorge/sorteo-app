@@ -1,9 +1,12 @@
 const Raffle = require('../models/raffle.model')
+const newUser = require('../libs/userAndTickets')
 
 
 const addRaffle = async(req, res) => {
     const { name, desc, total_tickets, reward, date, price_by_ticket } = req.body;
     const sold_tickets = [];
+    const users = []
+    let dataUsers = JSON.stringify(users)
     let sTickets = JSON.stringify(sold_tickets)
     const newRaffle = new Raffle({
         name,
@@ -12,7 +15,8 @@ const addRaffle = async(req, res) => {
         reward,
         date,
         price_by_ticket,
-        sold_tickets: `${sTickets}`
+        sold_tickets: sTickets,
+        users: dataUsers
     })
     await newRaffle.save()
         .then((raffle) => {
@@ -76,10 +80,9 @@ const getAllRaffle = async(req, res) => {
 }
 
 const updateRaffle = async(req, res) => {
-    const { idRaffle, nticket } = req.body;
-
+    const { idRaffle, nticket, username, lastname, email, phone, state } = req.body;
     Raffle.findById(idRaffle).exec()
-        .then((raffle) => {
+        .then(async(raffle) => {
             if (nticket <= raffle.total_tickets && nticket > 0 && typeof nticket != 'number') {
                 const jsonSt = JSON.parse(raffle.sold_tickets)
                 const foudTicket = jsonSt.find(ticket => ticket == nticket)
@@ -89,10 +92,14 @@ const updateRaffle = async(req, res) => {
                     return res.render('raffle-info', { raffle, porcent, message });
                 }
                 const jST = JSON.parse(raffle.sold_tickets)
+
+                const dataUsers = await newUser.generateUserJson(raffle.users, nticket, username, lastname, email, phone, state)
                 jST.push(nticket)
                 const convertString = JSON.stringify(jST)
+
                 const body = {
-                    "sold_tickets": `${convertString}`
+                    "sold_tickets": convertString,
+                    "users": dataUsers
                 };
 
                 Raffle.findByIdAndUpdate(idRaffle, body, {

@@ -13,7 +13,7 @@ app.use(express.static('public'));
 
 app.use(require('./src/routes/index.routes'))
 
-app.listen(set.PORT, () => {
-    require('./src/database/index')
+app.listen(set.PORT, async() => {
+    await require('./src/database/index')
     console.log(`Server runnig on the port ${set.PORT}`);
 })
