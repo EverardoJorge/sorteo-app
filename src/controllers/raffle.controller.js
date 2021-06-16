@@ -1,5 +1,5 @@
 const Raffle = require('../models/raffle.model')
-const newUser = require('../libs/userAndTickets')
+const {generateUser, searchTicket, newSoldTickets, updatedTickets} = require('../libs/userAndTickets')
 
 
 const addRaffle = async(req, res) => {
@@ -81,24 +81,26 @@ const getAllRaffle = async(req, res) => {
 
 const updateRaffle = async(req, res) => {
     const { idRaffle, nticket, username, lastname, email, phone, state } = req.body;
+    /**
+     * BUSCAR EN LA BASE DE DATOS SI HAY UNA RIFA CON EL ID 
+     */
     Raffle.findById(idRaffle).exec()
         .then(async(raffle) => {
             if (nticket <= raffle.total_tickets && nticket > 0 && typeof nticket != 'number') {
-                const jsonSt = JSON.parse(raffle.sold_tickets)
-                const foudTicket = jsonSt.find(ticket => ticket == nticket)
-                let porcent = jsonSt.length * 100 / raffle.total_tickets;
-                let message = `El boleto ${nticket} ya fue comprado`;
-                if (foudTicket) {
-                    return res.render('raffle-info', { raffle, porcent, message });
+                
+                /**
+                 * BUSCA DENTRO DE LA BASE DE DATOS QUE EL BOLETO ESTE DISPONIBLE
+                 */
+                let ticketFound = await searchTicket(raffle, nticket);
+                if (ticketFound) {
+                    return res.render('raffle-info', ticketFound);
                 }
-                const jST = JSON.parse(raffle.sold_tickets)
 
-                const dataUsers = await newUser.generateUserJson(raffle.users, nticket, username, lastname, email, phone, state)
-                jST.push(nticket)
-                const convertString = JSON.stringify(jST)
+                const dataUsers = await generateUser(raffle.users, nticket, username, lastname, email, phone, state)
+                const dataTickets = await newSoldTickets(raffle.sold_tickets, nticket)
 
                 const body = {
-                    "sold_tickets": convertString,
+                    "sold_tickets": dataTickets,
                     "users": dataUsers
                 };
 
@@ -109,11 +111,8 @@ const updateRaffle = async(req, res) => {
                         console.log(e)
                         return res.json({ e })
                     }
-                    const raffle = newRaffle;
-                    const jsonSt = JSON.parse(raffle.sold_tickets)
-                    const porcent = jsonSt.length * 100 / raffle.total_tickets;
-                    let message = `Boleto comprado`;
-                    res.render('raffle-info', { raffle, porcent, message });
+                    const data = updatedTickets(newRaffle)
+                    res.render('raffle-info', data);
                 })
 
             } else {
