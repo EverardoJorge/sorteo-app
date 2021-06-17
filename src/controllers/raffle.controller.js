@@ -1,5 +1,5 @@
 const Raffle = require('../models/raffle.model')
-const {generateUser, searchTicket, newSoldTickets, updatedTickets} = require('../libs/userAndTickets')
+const { generateUser, searchTicket, newSoldTickets, updatedTickets } = require('../libs/userAndTickets')
 
 
 const addRaffle = async(req, res) => {
@@ -87,7 +87,7 @@ const updateRaffle = async(req, res) => {
     Raffle.findById(idRaffle).exec()
         .then(async(raffle) => {
             if (nticket <= raffle.total_tickets && nticket > 0 && typeof nticket != 'number') {
-                
+
                 /**
                  * BUSCA DENTRO DE LA BASE DE DATOS QUE EL BOLETO ESTE DISPONIBLE
                  */
@@ -96,6 +96,9 @@ const updateRaffle = async(req, res) => {
                     return res.render('raffle-info', ticketFound);
                 }
 
+                /**
+                 * FUNCIONES PARA GENERAR LA INFORMACION A ACTUALIZAR
+                 */
                 const dataUsers = await generateUser(raffle.users, nticket, username, lastname, email, phone, state)
                 const dataTickets = await newSoldTickets(raffle.sold_tickets, nticket)
 
@@ -104,6 +107,10 @@ const updateRaffle = async(req, res) => {
                     "users": dataUsers
                 };
 
+                /**
+                 * FUNCION QUE ACTUALIZA LA INFORMACION DE LA BASE DE DATOS
+                 * RECIVE UN CALLBACK CON 2 PARAMETROS UN ERROR Y UNA RESPUESTA POSITIVA
+                 */
                 Raffle.findByIdAndUpdate(idRaffle, body, {
                     new: true
                 }, (e, newRaffle) => {
@@ -116,7 +123,6 @@ const updateRaffle = async(req, res) => {
                 })
 
             } else {
-                //let porcent = raffle.sold_tickets * 100 / raffle.total_tickets;
                 const jsonSTickets = JSON.parse(raffle.sold_tickets);
                 let porcent = jsonSTickets.length * 100 / raffle.total_tickets;
                 let message = `El boleto ${nticket} no se encuentra dentro del total de boletos`
