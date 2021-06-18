@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir tickets</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<body>
+    <label for="">Aqui puedes corregir los datos del usuario y/o añadir nuevos boletos</label>
+    <br><br>
+
+    <input type="hidden" id="raffleID" value="<%- raffleID -%>">
+    <input type="hidden" id="userID" value="<%- user.id -%>">
+
+
+    <label for="">Nombre</label>
+    <input type="text" id="username" value="<%- user.username -%>">
+    
+    <br><br>
+    <label for="">Apellidos</label>
+    <input type="text" id="lastname" value="<%- user.lastname -%>">
+    
+    <br><br>
+    <label for="">Correo</label>
+    <input type="text" id="email" value="<%- user.email -%>">
+
+    <br><br>
+    <label for="">Telefono</label>
+    <input type="text" id="phone" value="<%- user.phone -%>">
+
+    <br><br>
+    <label for="">Estado de la republica</label>
+    <input type="text" id="state" value="<%- user.state -%>">
+
+    <br><br>
+    <label for="">Sus comprados</label>
+
+    <!-- VALIDAR LOS BOLETOS DEPENDIENDO SI YA ESTAN COMPrados o pendientes -->
+        <% user.tickets.forEach((ticket) => { %>
+            <span class="badge rounded-pill bg-success"><%= ticket.ticket %></span>
+        <% }) %>
+
+    <br><br>
+    <label for="">Añadir boletos al usuario</label>
+    <label for="">Nota solo agrege los boletos separados por una coma: Ejemplo 1,2,3,78</label>
+    <input type="text" id="newtickets">
+
+    <input type="button" id="savetickets" value="Actualizar informacion">
+        
+
+
+<script src="js/request.js"></script>
+</body>
+</html>

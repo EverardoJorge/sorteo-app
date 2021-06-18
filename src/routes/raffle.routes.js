@@ -16,6 +16,6 @@ router.get('/sorteo', raffleController.getARaflle)
 router.delete('/eliminar-rifa', raffleController.deleteRaffle)
 router.get('/eliminar-rifa', raffleController.deleteRaffle)
 
-
+router.get('/addtickets', raffleController.addtickets)
 
 module.exports = router;

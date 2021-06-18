@@ -208,9 +208,8 @@
                                                             <th>Nombre</th>
                                                             <th>Estado</th>
                                                             <th>Correo</th>
-                                                            <th>Teléfono</th>
-                                                            <th>Boletos</th>
-                                                            <th>Nuevo boleto</th>
+                                                            <th>Teléfono</th>                                                            
+                                                            <th>Añadir</th>
 
                                                         </tr>
                                                     </thead>
@@ -234,12 +233,7 @@
                                                                     <%= user.phone %>
                                                                 </td>
                                                                 <td>
-                                                                    <%= user.tickets %>
-                                                                    <span class="badge rounded-pill bg-success">1</span>
-                                                                    <span class="badge rounded-pill bg-danger">15</span>
-                                                                </td>
-                                                                <td>
-                                                                    <a href=""><i class="far fa-edit"></i></a>
+                                                                    <a href="/addtickets?id=<%- raffle._id -%>&userid=<%= user.id %>"><i class="far fa-edit"></i></a>
                                                                 </td>
                                                             </tr>
                                                             <% }) %>

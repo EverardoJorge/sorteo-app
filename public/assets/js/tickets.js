@@ -1,1 +1,1 @@
-alert("Texto a mostrar");
+console.log('Simple Test')

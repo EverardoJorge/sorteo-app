@@ -1,7 +1,7 @@
 const {porcentCalculate, generateId} = require('./utilities')
 const set = require('../config/index');
 
-const generateUser = async (dataUsers, tickets, username, lastname, email, phone, state) => {
+const generateUser = async (dataUsers, ticket, username, lastname, email, phone, state) => {
     let usersJson = JSON.parse(dataUsers)
     let ln = usersJson.length;
     const id = await generateId(ln);
@@ -10,8 +10,8 @@ const generateUser = async (dataUsers, tickets, username, lastname, email, phone
      */
     const ticketsFormat = [
         {
-            id: set.VALID_STATES[1].id,
-            tickets
+            status: set.VALID_STATES[2].status,
+            ticket
         }
     ];
 
@@ -30,8 +30,6 @@ const generateUser = async (dataUsers, tickets, username, lastname, email, phone
     return newDataUsers;
 }
 
-
-
 const searchTicket = async(raffle, nticket) => {
     let jsonSoldTickets = JSON.parse(raffle.sold_tickets)
     let foudTicket = await jsonSoldTickets.find(ticket => ticket == nticket)
@@ -47,7 +45,6 @@ const searchTicket = async(raffle, nticket) => {
         return ticketFound
     }
 }
-
 
 const newSoldTickets = (sold_tickets, ticket) => {
     const jST = JSON.parse(sold_tickets)
@@ -69,9 +66,26 @@ const updatedTickets = (newRaffle) => {
     return data
 }
 
+const findUser = (users, userid, raffleID) => {
+    return new Promise( async (resolve, reject) => {
+        let user = await JSON.parse(users).find(user => user.id == userid)
+        if (!user) {
+            let message = 'The user not found or no exis, try with other user'
+            reject(message)
+        }
+        const data = {
+            user,
+            raffleID
+        }
+        resolve(data)
+    })
+}
+
 module.exports = {
     generateUser,
     searchTicket,
     newSoldTickets,
-    updatedTickets
+    updatedTickets,
+    findUser
+
 }

@@ -50,7 +50,6 @@
                                                         <tr>
                                                             <th>Nombre</th>
                                                             <th>Descripción</th>
-                                                            <th>Boletos vendidos</th>
                                                             <th>Fecha del sorteo</th>
                                                             <th>Más info.</th>
                                                         </tr>
@@ -65,14 +64,10 @@
                                                                     <%= raffle.desc %>
                                                                 </td>
                                                                 <td>
-                                                                    <!-- 
-                                                                       
-                                                                    -->
-                                                                </td>
-                                                                <td>
                                                                     <%= raffle.date %>
                                                                 </td>
-                                                                <td><a href="/sorteo?idRaffle=<%= raffle._id %>"><i class="far fa-share-square"></i></a></td>
+                                                                
+                                                                <td><a href="/sorteo?idRaffle=<%= raffle._id %>"><i class="fas fa-share"></i></a></td>
                                                             </tr>
                                                             <% }) %>
 
