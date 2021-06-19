@@ -16,9 +16,9 @@ router.get('/sorteo', raffleController.getARaflle)
 router.delete('/eliminar-rifa', raffleController.deleteRaffle)
 router.get('/eliminar-rifa', raffleController.deleteRaffle)
 
+
+router.get('/newtickets', raffleController.addtickets)
+
 //router.get('/addtickets', raffleController.addtickets)
-router.get('/addtickets', (req, res) => {
-    res.render('test')
-})
 
 module.exports = router;

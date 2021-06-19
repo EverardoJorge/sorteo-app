@@ -208,7 +208,7 @@
                                                             <th>Nombre</th>
                                                             <th>Estado</th>
                                                             <th>Correo</th>
-                                                            <th>Teléfono</th>                                                            
+                                                            <th>Teléfono</th>
                                                             <th>Añadir</th>
 
                                                         </tr>
@@ -221,7 +221,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <%= user.username %>
-                                                                    <%= user.lastname %>
+                                                                        <%= user.lastname %>
                                                                 </td>
                                                                 <td>
                                                                     <%= user.state %>
@@ -233,7 +233,7 @@
                                                                     <%= user.phone %>
                                                                 </td>
                                                                 <td>
-                                                                    <a href="/addtickets?id=<%- raffle._id -%>&userid=<%= user.id %>"><i class="far fa-edit"></i></a>
+                                                                    <a href="/newtickets?id=<%- raffle._id -%>&userid=<%= user.id %>"><i class="far fa-edit"></i></a>
                                                                 </td>
                                                             </tr>
                                                             <% }) %>
@@ -349,7 +349,7 @@
                                                                             <option value="Yucatán">Yucatán</option>
                                                                             <option value="Zacatecas">Zacatecas</option>
                                                                           </select>
-                                                                          <label for="floatingSelect">Estados de la república</label>
+                                                                        <label for="floatingSelect">Estados de la república</label>
                                                                     </div>
                                                                 </div>
 
