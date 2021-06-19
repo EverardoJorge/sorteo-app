@@ -140,7 +140,6 @@ const addtickets = (req, res) => {
     const id = req.query.id;
     const userid = req.query.userid;
     if (!id) {
-        
         return res.redirect(`/sorteo?idRaffle=${id}`)
     }
     Raffle.findById(id).exec()

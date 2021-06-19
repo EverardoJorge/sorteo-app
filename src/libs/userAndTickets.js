@@ -1,19 +1,17 @@
-const {porcentCalculate, generateId} = require('./utilities')
+const { porcentCalculate, generateId } = require('./utilities')
 const set = require('../config/index');
 
-const generateUser = async (dataUsers, ticket, username, lastname, email, phone, state) => {
+const generateUser = async(dataUsers, ticket, username, lastname, email, phone, state) => {
     let usersJson = JSON.parse(dataUsers)
     let ln = usersJson.length;
     const id = await generateId(ln);
     /**
      * FORMATO ESPERADO PARA LOS BOLETOS
      */
-    const ticketsFormat = [
-        {
-            status: set.VALID_STATES[2].status,
-            ticket
-        }
-    ];
+    const ticketsFormat = [{
+        status: set.VALID_STATES[1].status,
+        ticket
+    }];
 
     const newUser = {
         id,
@@ -55,11 +53,11 @@ const newSoldTickets = (sold_tickets, ticket) => {
 
 const updatedTickets = (newRaffle) => {
     const jsonSt = JSON.parse(newRaffle.sold_tickets)
-    const porcent = porcentCalculate(jsonSt.length, newRaffle.total_tickets) 
+    const porcent = porcentCalculate(jsonSt.length, newRaffle.total_tickets)
     let message = `Boleto comprado`;
 
     const data = {
-        raffle:newRaffle,
+        raffle: newRaffle,
         porcent,
         message
     }
@@ -67,7 +65,7 @@ const updatedTickets = (newRaffle) => {
 }
 
 const findUser = (users, userid, raffleID) => {
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
         let user = await JSON.parse(users).find(user => user.id == userid)
         if (!user) {
             let message = 'The user not found or no exis, try with other user'
