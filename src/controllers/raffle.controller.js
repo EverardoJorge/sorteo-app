@@ -139,22 +139,26 @@ const updateRaffle = async(req, res) => {
 const addtickets = (req, res) => {
     const id = req.query.id;
     const userid = req.query.userid;
-    if (!id) {
-        return res.redirect(`/sorteo?idRaffle=${id}`)
-    }
-    Raffle.findById(id).exec()
-        .then((raffle) => {
-            //  FIND TO USER
-            return findUser(raffle.users, userid, id)
-        })
-        .then((data) => {
-            console.log(data)
-            res.render('add-tickets', data)
-        })
-        .catch((e) => {
-            console.log(e);
-            res.redirect(`/sorteo?idRaffle=${id}`)
-        })
+    res.render('test')
+
+    /**
+         if (!id) {
+            return res.redirect(`/sorteo?idRaffle=${id}`)
+        }
+        Raffle.findById(id).exec()
+            .then((raffle) => {
+                //  FIND TO USER
+                return findUser(raffle.users, userid, id)
+            })
+            .then((data) => {
+                console.log(data)
+                res.render('add-tickets', data)
+            })
+            .catch((e) => {
+                console.log(e);
+                res.redirect(`/sorteo?idRaffle=${id}`)
+            })
+     */
 }
 
 module.exports = {
