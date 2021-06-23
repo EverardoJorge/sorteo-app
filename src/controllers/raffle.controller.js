@@ -146,8 +146,7 @@ const addtickets = (req, res) => {
     }
     Raffle.findById(id).exec()
         .then((raffle) => {
-            //  FIND TO USER
-            return findUser(raffle.users, userid, id)
+            return findUser(raffle.users, userid, id, raffle.total_tickets)
         })
         .then((data) => {
             console.log(data)

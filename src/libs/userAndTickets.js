@@ -64,7 +64,7 @@ const updatedTickets = (newRaffle) => {
     return data
 }
 
-const findUser = (users, userid, raffleID) => {
+const findUser = (users, userid, raffleID, totalTickets) => {
     return new Promise(async(resolve, reject) => {
         let user = await JSON.parse(users).find(user => user.id == userid)
         if (!user) {
@@ -73,7 +73,8 @@ const findUser = (users, userid, raffleID) => {
         }
         const data = {
             user,
-            raffleID
+            raffleID,
+            totalTickets
         }
         resolve(data)
     })
