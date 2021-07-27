@@ -55,7 +55,6 @@ const updatedTickets = (newRaffle) => {
     const jsonSt = JSON.parse(newRaffle.sold_tickets)
     const porcent = porcentCalculate(jsonSt.length, newRaffle.total_tickets)
     let message = `Boleto comprado`;
-
     const data = {
         raffle: newRaffle,
         porcent,
@@ -80,11 +79,70 @@ const findUser = (users, userid, raffleID, totalTickets) => {
     })
 }
 
+const findTickets = (raffleData, body) => {
+    return new Promise(async(resolve, reject) => {
+        var ticket;
+        let ticketsObject = [];
+        let formTickets=[];
+        var idUSER = body.userId - 1;
+        /**
+         * CON EL CICLO FOR BUSCAMOS LOS TICKETS PARA VER SI  ESTAN DISPONIBLES
+         */
+        for (let i = 0; i < body.tickets.length; i++) {
+            ticket = JSON.parse(raffleData.sold_tickets).find(ticket => ticket == body.tickets[i].ticket)
+            /**
+             * CREAMOS UN OBJETO EL CUAL CONTIENE LA INFORMCION DE LOS BOLETOS, BOLETOS ENCONTRADOS Y NO ENCONTRADOS
+             * ESTE OBJETO NOS SERVIRA PARA DAR RESPUESTA AL FRONT-END
+             */
+            if (!ticket) {
+                ticketsObject.push({found: false, nticket: body.tickets[i].ticket, status: body.tickets[i].status})
+            }else {
+                ticketsObject.push({found: true, nticket: body.tickets[i].ticket, status: body.tickets[i].status})
+            }
+        }
+        /**
+         * BUSCAMOS AL USUARIO PARA VER SI EXISTE, DE NO EXISTIR SE ENVIAR UN ERROR EN EL REJECT
+        */
+        let user = await JSON.parse(raffleData.users).find(user => user.id == body.userId)
+        if (!user) {
+            return reject("user no exist, try other user")
+        }
+        /**
+         * CREAMOS UN NUEVO OBJETO DE BOLETOS DISPONIBLES PARA QUE POSTERIORMENTE PUEDAN SER AÑADIDOS
+         */
+        for (let i = 0; i < ticketsObject.length; i++) {
+            if (ticketsObject[i].found == false) {
+                JSON.parse(raffleData.users)[idUSER].tickets.push({
+                    status: ticketsObject[i].status,
+                    ticket: ticketsObject[i].nticket
+                })
+                console.log(JSON.parse(raffleData.users)[idUSER].tickets);
+                // formTickets.push({
+                //     status: ticketsObject[i].status,
+                //     ticket: ticketsObject[i].nticket
+                // })
+            }
+        }
+        // console.log(formTickets);
+        /**
+         * AÑADIMOS LOS BOLETOS QUE NO SE ENCONTRARON AL RESPECTIVO USUARIO
+         */
+        // for (let i = 0; i < formTickets.length; i++) {
+        //     await JSON.parse(raffleData.users)[idUSER].tickets.push(formTickets[i])
+        // }
+        console.log(JSON.parse(raffleData.users)[idUSER].tickets);
+
+        return resolve(ticketsObject)
+    })
+}
+
+
 module.exports = {
     generateUser,
     searchTicket,
     newSoldTickets,
     updatedTickets,
-    findUser
+    findUser,
+    findTickets
 
 }
