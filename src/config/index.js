@@ -5,7 +5,7 @@ module.exports = {
     URL_DB: process.env.URL_DB,
     VALID_STATES: [
         {
-            id:1, 
+            id:1,
             status: "Comprado",
         },
         {
@@ -13,4 +13,4 @@ module.exports = {
             status: "Pendiente"
         }
     ]
-}
+};

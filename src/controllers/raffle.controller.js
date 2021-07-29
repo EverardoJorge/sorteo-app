@@ -1,15 +1,15 @@
-const Raffle = require('../models/raffle.model')
-const { generateUser, searchTicket, newSoldTickets, updatedTickets, findUser, findTickets } = require('../libs/userAndTickets')
+const Raffle = require('../models/raffle.model');
+const { generateUser, searchTicket, newSoldTickets, updatedTickets, findUser, findTickets } = require('../libs/userAndTickets');
 
 
 const addRaffle = async (req, res) => {
     let body = req.body;
-    console.log(body)
+    console.log(body);
     const { name, desc, total_tickets, reward, date, price_by_ticket } = req.body;
     const sold_tickets = [];
-    const users = []
-    let dataUsers = JSON.stringify(users)
-    let sTickets = JSON.stringify(sold_tickets)
+    const users = [];
+    let dataUsers = JSON.stringify(users);
+    let sTickets = JSON.stringify(sold_tickets);
     const newRaffle = new Raffle({
         name,
         desc,
@@ -19,7 +19,7 @@ const addRaffle = async (req, res) => {
         price_by_ticket,
         sold_tickets: sTickets,
         users: dataUsers
-    })
+    });
     await newRaffle.save()
         .then((raffle) => {
             res.redirect('/sorteos');
@@ -27,25 +27,24 @@ const addRaffle = async (req, res) => {
         .catch((e) => {
             console.log(e);
             res.redirect('/sorteos')
-        })
+        });
 
-}
+};
 
 const deleteRaffle = (req, res) => {
     const idRaffle = req.query.idRaffle;
     if (!idRaffle) {
         return res.redirect('/sorteos');
     }
-
     Raffle.findById(idRaffle)
         .exec()
         .then(async (raffle) => {
-            await Raffle.findByIdAndDelete(idRaffle)
-            res.redirect('/sorteos')
+            await Raffle.findByIdAndDelete(idRaffle);
+            res.redirect('/sorteos');
         })
         .catch((e) => {
             console.log(e);
-            res.redirect('/sorteos')
+            res.redirect('/sorteos');
         })
 
 }
@@ -57,28 +56,29 @@ const getARaflle = (req, res) => {
     }
     Raffle.findById(idRaffle).exec()
         .then((raffle) => {
-
-            let jsonSoldTickets = JSON.parse(raffle.sold_tickets)
+            let jsonSoldTickets = JSON.parse(raffle.sold_tickets);
             let porcent = jsonSoldTickets.length * 100 / raffle.total_tickets;
             let message = '';
             res.render('raffle-info', { raffle, porcent, message });
-
         })
         .catch((e) => {
             console.log(e);
-            res.redirect('/sorteos')
+            res.redirect('/sorteos');
         })
 
 
 }
 
 const getAllRaffle = async (req, res) => {
-    Raffle.find().exec().then((raffles) => {
-        res.render('raffle', { raffles });
-    }).catch((e) => {
-        console.log(e);
-        res.redirect('/sorteos')
-    })
+    Raffle.find()
+            .exec()
+            .then((raffles) => {
+                res.render('raffle', { raffles });
+            })
+            .catch((e) => {
+                console.log(e);
+                res.redirect('/sorteos');
+            });
 }
 
 const updateRaffle = async (req, res) => {
@@ -89,7 +89,6 @@ const updateRaffle = async (req, res) => {
     Raffle.findById(idRaffle).exec()
         .then(async (raffle) => {
             if (nticket <= raffle.total_tickets && nticket > 0 && typeof nticket != 'number') {
-
                 /**
                  * BUSCA DENTRO DE LA BASE DE DATOS QUE EL BOLETO ESTE DISPONIBLE
                  */
@@ -97,18 +96,15 @@ const updateRaffle = async (req, res) => {
                 if (ticketFound) {
                     return res.render('raffle-info', ticketFound);
                 }
-
                 /**
                  * FUNCIONES PARA GENERAR LA INFORMACION A ACTUALIZAR
                  */
                 const dataUsers = await generateUser(raffle.users, nticket, username, lastname, email, phone, state);
                 const dataTickets = await newSoldTickets(raffle.sold_tickets, nticket);
-
                 const body = {
                     "sold_tickets": dataTickets,
                     "users": dataUsers
                 };
-
                 /**
                  * FUNCION QUE ACTUALIZA LA INFORMACION DE LA BASE DE DATOS
                  * RECIVE UN CALLBACK CON 2 PARAMETROS UN ERROR Y UNA RESPUESTA POSITIVA
@@ -117,24 +113,24 @@ const updateRaffle = async (req, res) => {
                     new: true
                 }, (e, newRaffle) => {
                     if (e) {
-                        console.log(e)
-                        return res.json({ e })
+                        console.log(e);
+                        return res.json({ e });
                     }
                     const data = updatedTickets(newRaffle)
                     res.render('raffle-info', data);
-                })
+                });
 
             } else {
                 const jsonSTickets = JSON.parse(raffle.sold_tickets);
                 let porcent = jsonSTickets.length * 100 / raffle.total_tickets;
-                let message = `El boleto ${nticket} no se encuentra dentro del total de boletos`
+                let message = `El boleto ${nticket} no se encuentra dentro del total de boletos`;
                 res.render('raffle-info', { raffle, porcent, message });
             }
         })
         .catch((e) => {
             console.log(e);
             res.redirect('/sorteos')
-        })
+        });
 
 }
 
@@ -142,20 +138,20 @@ const addtickets = (req, res) => {
     const id = req.query.id;
     const userid = req.query.userid;
     if (!id) {
-        return res.redirect(`/sorteo?idRaffle=${id}`)
+        return res.redirect(`/sorteo?idRaffle=${id}`);
     }
     Raffle.findById(id).exec()
         .then((raffle) => {
-            return findUser(raffle.users, userid, id, raffle.total_tickets)
+            return findUser(raffle.users, userid, id, raffle.total_tickets);
         })
         .then((data) => {
             console.log(data)
-            res.render('add-tickets', data)
+            res.render('add-tickets', data);
         })
         .catch((e) => {
             console.log(e);
-            res.redirect(`/sorteo?idRaffle=${id}`)
-        })
+            res.redirect(`/sorteo?idRaffle=${id}`);
+        });
 }
 
 const reqTickets = (req, res) => {

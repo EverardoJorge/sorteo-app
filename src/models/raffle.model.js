@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model } = require('mongoose');
 
 const RaffleSchema = new Schema({
     name: {
@@ -28,6 +28,6 @@ const RaffleSchema = new Schema({
     users: {
         type: String
     }
-})
+});
 
-module.exports = model('Raffle', RaffleSchema)
+module.exports = model('Raffle', RaffleSchema);
