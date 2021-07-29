@@ -1,19 +1,8 @@
-<<<<<<< HEAD
 const Raffle = require('../models/raffle.model');
 const { generateUser, searchTicket, newSoldTickets, updatedTickets, findUser, findTickets } = require('../libs/userAndTickets');
-=======
-const Raffle = require('../models/raffle.model')
-const { generateUser, searchTicket, newSoldTickets, updatedTickets, findUser, findTickets } = require('../libs/userAndTickets')
->>>>>>> 003c94bd686a89612b3dbe062fc4fdbab2000cd0
-
 
 const addRaffle = async (req, res) => {
     let body = req.body;
-<<<<<<< HEAD
-    console.log(body);
-=======
-    console.log(body)
->>>>>>> 003c94bd686a89612b3dbe062fc4fdbab2000cd0
     const { name, desc, total_tickets, reward, date, price_by_ticket } = req.body;
     const sold_tickets = [];
     const users = [];
@@ -35,7 +24,7 @@ const addRaffle = async (req, res) => {
         })
         .catch((e) => {
             console.log(e);
-            res.redirect('/sorteos')
+            res.redirect('/sorteos');
         });
 
 };
@@ -48,20 +37,14 @@ const deleteRaffle = (req, res) => {
     Raffle.findById(idRaffle)
         .exec()
         .then(async (raffle) => {
-<<<<<<< HEAD
             await Raffle.findByIdAndDelete(idRaffle);
             res.redirect('/sorteos');
-=======
-            await Raffle.findByIdAndDelete(idRaffle)
-            res.redirect('/sorteos')
->>>>>>> 003c94bd686a89612b3dbe062fc4fdbab2000cd0
         })
         .catch((e) => {
             console.log(e);
             res.redirect('/sorteos');
-        })
-
-}
+        });
+};
 
 const getARaflle = (req, res) => {
     const idRaffle = req.query.idRaffle;
@@ -78,13 +61,10 @@ const getARaflle = (req, res) => {
         .catch((e) => {
             console.log(e);
             res.redirect('/sorteos');
-        })
-
-
-}
+        });
+};
 
 const getAllRaffle = async (req, res) => {
-<<<<<<< HEAD
     Raffle.find()
             .exec()
             .then((raffles) => {
@@ -94,15 +74,7 @@ const getAllRaffle = async (req, res) => {
                 console.log(e);
                 res.redirect('/sorteos');
             });
-=======
-    Raffle.find().exec().then((raffles) => {
-        res.render('raffle', { raffles });
-    }).catch((e) => {
-        console.log(e);
-        res.redirect('/sorteos')
-    })
->>>>>>> 003c94bd686a89612b3dbe062fc4fdbab2000cd0
-}
+};
 
 const updateRaffle = async (req, res) => {
     const { idRaffle, nticket, username, lastname, email, phone, state } = req.body;
@@ -139,7 +111,7 @@ const updateRaffle = async (req, res) => {
                         console.log(e);
                         return res.json({ e });
                     }
-                    const data = updatedTickets(newRaffle)
+                    const data = updatedTickets(newRaffle);
                     res.render('raffle-info', data);
                 });
 
@@ -152,10 +124,10 @@ const updateRaffle = async (req, res) => {
         })
         .catch((e) => {
             console.log(e);
-            res.redirect('/sorteos')
+            res.redirect('/sorteos');
         });
 
-}
+};
 
 const addtickets = (req, res) => {
     const id = req.query.id;
@@ -168,14 +140,14 @@ const addtickets = (req, res) => {
             return findUser(raffle.users, userid, id, raffle.total_tickets);
         })
         .then((data) => {
-            console.log(data)
+            console.log(data);
             res.render('add-tickets', data);
         })
         .catch((e) => {
             console.log(e);
             res.redirect(`/sorteo?idRaffle=${id}`);
         });
-}
+};
 
 const reqTickets = (req, res) => {
     const { raffleId, tickets, userId } = req.body;
@@ -185,7 +157,6 @@ const reqTickets = (req, res) => {
         .then((raffle) => {
             return findTickets(raffle, body);
         })
-<<<<<<< HEAD
         .then((body) => {
             /**
              * ACTUALIZAR LA INFORMACION
@@ -200,26 +171,11 @@ const reqTickets = (req, res) => {
              res.json({
                 ok: true,
                 message: "Todo salio bien"
-=======
-        .then((dataTickets) => {
-            // console.log(dataTickets);
-            /**
-             * ACTUALIZAR LA INFORMACION
-             */
-
-            /**
-             * RESPUESTA AL BACK-END DESPUES DE ACTUALIZAR AL USUARIO
-             */
-            res.json({
-                ok: true,
-                message: "there is not a error",
-                dataTickets
->>>>>>> 003c94bd686a89612b3dbe062fc4fdbab2000cd0
             });
         })
         .catch((e) => {
-            console.log(e)
-        })
+            console.log(e);
+        });
 };
 
 module.exports = {
@@ -230,4 +186,4 @@ module.exports = {
     updateRaffle,
     addtickets,
     reqTickets
-}
+};
