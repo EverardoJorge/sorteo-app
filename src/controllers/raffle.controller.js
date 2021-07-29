@@ -1,10 +1,19 @@
+<<<<<<< HEAD
 const Raffle = require('../models/raffle.model');
 const { generateUser, searchTicket, newSoldTickets, updatedTickets, findUser, findTickets } = require('../libs/userAndTickets');
+=======
+const Raffle = require('../models/raffle.model')
+const { generateUser, searchTicket, newSoldTickets, updatedTickets, findUser, findTickets } = require('../libs/userAndTickets')
+>>>>>>> 003c94bd686a89612b3dbe062fc4fdbab2000cd0
 
 
 const addRaffle = async (req, res) => {
     let body = req.body;
+<<<<<<< HEAD
     console.log(body);
+=======
+    console.log(body)
+>>>>>>> 003c94bd686a89612b3dbe062fc4fdbab2000cd0
     const { name, desc, total_tickets, reward, date, price_by_ticket } = req.body;
     const sold_tickets = [];
     const users = [];
@@ -39,8 +48,13 @@ const deleteRaffle = (req, res) => {
     Raffle.findById(idRaffle)
         .exec()
         .then(async (raffle) => {
+<<<<<<< HEAD
             await Raffle.findByIdAndDelete(idRaffle);
             res.redirect('/sorteos');
+=======
+            await Raffle.findByIdAndDelete(idRaffle)
+            res.redirect('/sorteos')
+>>>>>>> 003c94bd686a89612b3dbe062fc4fdbab2000cd0
         })
         .catch((e) => {
             console.log(e);
@@ -70,6 +84,7 @@ const getARaflle = (req, res) => {
 }
 
 const getAllRaffle = async (req, res) => {
+<<<<<<< HEAD
     Raffle.find()
             .exec()
             .then((raffles) => {
@@ -79,6 +94,14 @@ const getAllRaffle = async (req, res) => {
                 console.log(e);
                 res.redirect('/sorteos');
             });
+=======
+    Raffle.find().exec().then((raffles) => {
+        res.render('raffle', { raffles });
+    }).catch((e) => {
+        console.log(e);
+        res.redirect('/sorteos')
+    })
+>>>>>>> 003c94bd686a89612b3dbe062fc4fdbab2000cd0
 }
 
 const updateRaffle = async (req, res) => {
@@ -162,6 +185,7 @@ const reqTickets = (req, res) => {
         .then((raffle) => {
             return findTickets(raffle, body);
         })
+<<<<<<< HEAD
         .then((body) => {
             /**
              * ACTUALIZAR LA INFORMACION
@@ -176,6 +200,21 @@ const reqTickets = (req, res) => {
              res.json({
                 ok: true,
                 message: "Todo salio bien"
+=======
+        .then((dataTickets) => {
+            // console.log(dataTickets);
+            /**
+             * ACTUALIZAR LA INFORMACION
+             */
+
+            /**
+             * RESPUESTA AL BACK-END DESPUES DE ACTUALIZAR AL USUARIO
+             */
+            res.json({
+                ok: true,
+                message: "there is not a error",
+                dataTickets
+>>>>>>> 003c94bd686a89612b3dbe062fc4fdbab2000cd0
             });
         })
         .catch((e) => {
