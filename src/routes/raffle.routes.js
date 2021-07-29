@@ -19,6 +19,6 @@ router.get('/eliminar-rifa', raffleController.deleteRaffle)
 
 router.get('/newtickets', raffleController.addtickets)
 
-//router.get('/addtickets', raffleController.addtickets)
+router.post('/addtickets', raffleController.reqTickets)
 
 module.exports = router;

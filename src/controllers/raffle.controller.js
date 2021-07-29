@@ -1,8 +1,10 @@
 const Raffle = require('../models/raffle.model')
-const { generateUser, searchTicket, newSoldTickets, updatedTickets, findUser } = require('../libs/userAndTickets')
+const { generateUser, searchTicket, newSoldTickets, updatedTickets, findUser, findTickets } = require('../libs/userAndTickets')
 
 
-const addRaffle = async(req, res) => {
+const addRaffle = async (req, res) => {
+    let body = req.body;
+    console.log(body)
     const { name, desc, total_tickets, reward, date, price_by_ticket } = req.body;
     const sold_tickets = [];
     const users = []
@@ -37,7 +39,7 @@ const deleteRaffle = (req, res) => {
 
     Raffle.findById(idRaffle)
         .exec()
-        .then(async(raffle) => {
+        .then(async (raffle) => {
             await Raffle.findByIdAndDelete(idRaffle)
             res.redirect('/sorteos')
         })
@@ -70,7 +72,7 @@ const getARaflle = (req, res) => {
 
 }
 
-const getAllRaffle = async(req, res) => {
+const getAllRaffle = async (req, res) => {
     Raffle.find().exec().then((raffles) => {
         res.render('raffle', { raffles });
     }).catch((e) => {
@@ -79,13 +81,13 @@ const getAllRaffle = async(req, res) => {
     })
 }
 
-const updateRaffle = async(req, res) => {
+const updateRaffle = async (req, res) => {
     const { idRaffle, nticket, username, lastname, email, phone, state } = req.body;
     /**
-     * BUSCAR EN LA BASE DE DATOS SI HAY UNA RIFA CON EL ID 
+     * BUSCAR EN LA BASE DE DATOS SI HAY UNA RIFA CON EL ID
      */
     Raffle.findById(idRaffle).exec()
-        .then(async(raffle) => {
+        .then(async (raffle) => {
             if (nticket <= raffle.total_tickets && nticket > 0 && typeof nticket != 'number') {
 
                 /**
@@ -99,8 +101,8 @@ const updateRaffle = async(req, res) => {
                 /**
                  * FUNCIONES PARA GENERAR LA INFORMACION A ACTUALIZAR
                  */
-                const dataUsers = await generateUser(raffle.users, nticket, username, lastname, email, phone, state)
-                const dataTickets = await newSoldTickets(raffle.sold_tickets, nticket)
+                const dataUsers = await generateUser(raffle.users, nticket, username, lastname, email, phone, state);
+                const dataTickets = await newSoldTickets(raffle.sold_tickets, nticket);
 
                 const body = {
                     "sold_tickets": dataTickets,
@@ -139,8 +141,6 @@ const updateRaffle = async(req, res) => {
 const addtickets = (req, res) => {
     const id = req.query.id;
     const userid = req.query.userid;
-
-
     if (!id) {
         return res.redirect(`/sorteo?idRaffle=${id}`)
     }
@@ -158,11 +158,41 @@ const addtickets = (req, res) => {
         })
 }
 
+const reqTickets = (req, res) => {
+    const { raffleId, tickets, userId } = req.body;
+    const body = { tickets, userId };
+    Raffle.findById(raffleId)
+        .exec()
+        .then((raffle) => {
+            return findTickets(raffle, body);
+        })
+        .then((body) => {
+            /**
+             * ACTUALIZAR LA INFORMACION
+             */
+            return Raffle.findByIdAndUpdate(raffleId, body, {new: true});
+        }).then(newRaffleData => {
+
+            console.log(newRaffleData);
+            /**
+             * RESPUESTA AL BACK-END DESPUES DE ACTUALIZAR AL USUARIO
+             */
+             res.json({
+                ok: true,
+                message: "Todo salio bien"
+            });
+        })
+        .catch((e) => {
+            console.log(e)
+        })
+};
+
 module.exports = {
     addRaffle,
     deleteRaffle,
     getARaflle,
     getAllRaffle,
     updateRaffle,
-    addtickets
+    addtickets,
+    reqTickets
 }
